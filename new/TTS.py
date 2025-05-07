@@ -32,7 +32,9 @@ def speak_with_deepgram():
 
         print("🔊 Requesting TTS from Deepgram...")
         # Save the TTS result to a file
-        response = deepgram.speak.v("1").save(FILENAME, TEXT, options)
+        # response = deepgram.speak.v("1").save(FILENAME, TEXT, options)
+        response = deepgram.speak.rest.v("1").save(FILENAME, TEXT, options)
+
 
         print("✅ TTS audio saved to:", FILENAME)
 

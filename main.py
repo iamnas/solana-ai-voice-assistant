@@ -31,7 +31,7 @@ def record_audio(filename, record_seconds=5):
 def transcribe_audio(filename):
     print("📝 Transcribing...")
     model = whisper.load_model("base")
-    result = model.transcribe(filename)
+    result = model.transcribe(filename,fp16=False)
     print("🗣️ You said:", result["text"])
     return result["text"]
 
@@ -40,9 +40,10 @@ def speak_response(text):
     try:
         print("🔊 Speaking (with SDK)...")
         deepgram = DeepgramClient(DEEPGRAM_API_KEY)
+        TEXT = {"text": text}
         options = SpeakOptions(model="aura-asteria-en")
-        response = deepgram.speak.v("1").save(RESPONSE_MP3, {"text": text}, options)
-        # response = deepgram.speak.rest.speak_to_file(RESPONSE_MP3, {"text": text}, options)
+        # response = deepgram.speak.v("1").save(RESPONSE_MP3, {"text": text}, options)
+        response = deepgram.speak.rest.v("1").save(RESPONSE_MP3, TEXT, options)
         print("🔊 Playing response...")
         playsound(RESPONSE_MP3)
     except Exception as e:
@@ -51,7 +52,7 @@ def speak_response(text):
 # Main Loop
 def main():
     while True:
-        # filename = f"live_input_{uuid.uuid4()}.wav"
+        
         filename = "temp_input.wav"
 
         
@@ -60,7 +61,7 @@ def main():
 
         if not user_input.strip():
             print("🤖 I didn’t hear anything. Would you like to try again or stop the conversation?")
-            speak_response('🤖 I didn’t hear anything. Would you like to try again or stop the conversation?')
+            speak_response('I didn’t hear anything. Would you like to try again or stop the conversation?')
             continue
         
 

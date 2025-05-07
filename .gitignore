@@ -1,11 +1,14 @@
-    *.pyc
-    __pycache__/
-    *.egg-info/
-    *.dist-info/
-    *.log
-    *.swp
-    .env
-    venv/
-    .vscode/
-    *.idea/
-    *.DS_Store
+*.pyc
+__pycache__/
+*.egg-info/
+*.dist-info/
+*.log
+*.swp
+venv/
+.vscode/
+*.idea/
+*.DS_Store
+.env
+
+*.wav
+*.mp3

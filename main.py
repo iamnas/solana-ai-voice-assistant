@@ -30,7 +30,7 @@ def record_audio(filename, record_seconds=5):
 # 📝 Step 2: Transcribe Audio
 def transcribe_audio(filename):
     print("📝 Transcribing...")
-    model = whisper.load_model("base")
+    model = whisper.load_model("base.en")
     result = model.transcribe(filename,fp16=False)
     print("🗣️ You said:", result["text"])
     return result["text"]

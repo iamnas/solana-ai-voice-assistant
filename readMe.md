@@ -44,10 +44,28 @@ python main.py
 ## 📁 File Structure
 
 ```
-├── main.py              # Main entry point
-├── .env                 # Contains your Deepgram API key
-├── requirements.txt     # All Python dependencies
-├── README.md            # This file
+voice-agent/
+├── .env                         # Environment variables (e.g., API keys)
+├── README.md                    # Project overview and setup instructions
+├── requirements.txt             # Python dependencies
+├── main.py                      # Main voice assistant loop (record, transcribe, respond, speak)
+├── agent/                       # Agent framework
+│   ├── __init__.py
+│   ├── agent.py                 # Central loader to select active agent
+│   ├── openai_agent/
+│   │   └── gpt_agent.py         # Uses OpenAI GPT (e.g., GPT-4)
+│   ├── local_agent/
+│   │   └── local_llm.py         # Talks to local LLMs (e.g., via Ollama)
+│   ├── rag_agent/
+│   │   ├── __init__.py
+│   │   └── rag.py               # Retrieval-augmented generation logic
+│   └── genai_agent/
+│       └── genai_agent.py       # Custom GenAI agent implementation
+│
+│
+├── actions/
+|_____                       
+
 ```
 
 ## 🧠 Example Q\&A

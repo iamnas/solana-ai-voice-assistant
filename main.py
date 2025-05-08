@@ -9,9 +9,9 @@ import scipy.io.wavfile as wavfile
 from playsound import playsound
 from agent.agent import agent  # Import the agent module
 from deepgram import DeepgramClient, SpeakOptions
-from actions import handle_intent
-
+from actions import handle_intent  # Must support passing address
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Config
@@ -32,7 +32,7 @@ def record_audio(filename, record_seconds=5):
 def transcribe_audio(filename):
     print("📝 Transcribing...")
     model = whisper.load_model("base.en")
-    result = model.transcribe(filename,fp16=False)
+    result = model.transcribe(filename, fp16=False)
     print("🗣️ You said:", result["text"])
     return result["text"]
 
@@ -43,14 +43,18 @@ def speak_response(text):
         deepgram = DeepgramClient(DEEPGRAM_API_KEY)
         TEXT = {"text": text}
         options = SpeakOptions(model="aura-asteria-en")
-        # response = deepgram.speak.v("1").save(RESPONSE_MP3, {"text": text}, options)
         response = deepgram.speak.rest.v("1").save(RESPONSE_MP3, TEXT, options)
         print("🔊 Playing response...")
         playsound(RESPONSE_MP3)
     except Exception as e:
         print(f"⚠️ Error using Deepgram SDK: {e}")
 
+# 🔐 Prompt for Solana address if needed
+def prompt_for_address():
+    # speak_response("Please type your Solana wallet address.")
+    return input("🔐 Please type your Solana address: ").strip()
 
+# 🧠 Main Loop
 def main():
     while True:
         filename = "temp_input.wav"
@@ -70,7 +74,14 @@ def main():
 
         if intent not in [None, "none"] and not end:
             print(f"✨ Detected intent: {intent}")
-            action_reply = handle_intent(intent)
+
+            # If intent is get_balance, ask for address
+            if intent == "get_balance":
+                sol_address = prompt_for_address()
+                action_reply = handle_intent(intent, address=sol_address)
+            else:
+                action_reply = handle_intent(intent)
+
             print("⚙️ Action response:", action_reply)
             speak_response(action_reply)
 

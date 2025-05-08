@@ -9,6 +9,7 @@ import scipy.io.wavfile as wavfile
 from playsound import playsound
 from agent.agent import agent  # Import the agent module
 from deepgram import DeepgramClient, SpeakOptions
+from actions import handle_intent
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -49,25 +50,29 @@ def speak_response(text):
     except Exception as e:
         print(f"⚠️ Error using Deepgram SDK: {e}")
 
-# Main Loop
+
 def main():
     while True:
-        
         filename = "temp_input.wav"
 
-        
         record_audio(filename)
         user_input = transcribe_audio(filename)
 
         if not user_input.strip():
-            print("🤖 I didn’t hear anything. Would you like to try again or stop the conversation?")
-            speak_response('I didn’t hear anything. Would you like to try again or stop the conversation?')
+            print("🤖 I didn’t hear anything.")
+            speak_response("I didn’t hear anything.")
             continue
-        
 
-        reply, end = agent(user_input, mode="openai")
-        print("response", reply)
+        reply, end, intent = agent(user_input, mode="openai")
+
+        print("🤖:", reply)
         speak_response(reply)
+
+        if intent not in [None, "none"] and not end:
+            print(f"✨ Detected intent: {intent}")
+            action_reply = handle_intent(intent)
+            print("⚙️ Action response:", action_reply)
+            speak_response(action_reply)
 
         try:
             os.remove(filename)
@@ -75,11 +80,11 @@ def main():
                 os.remove(RESPONSE_MP3)
         except Exception as cleanup_error:
             print(f"⚠️ Cleanup error: {cleanup_error}")
-        
+
         if end:
-            print("👋 Ending conversation as requested by the user.")
+            print("👋 Ending conversation.")
             break
-        
+
         time.sleep(0.5)
 
 if __name__ == "__main__":

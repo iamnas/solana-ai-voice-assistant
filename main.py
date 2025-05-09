@@ -98,62 +98,7 @@ def main():
             break
 
         time.sleep(0.5)
-    # while True:
-    #     filename = "temp_input.wav"
 
-    #     record_audio(filename)
-    #     user_input = transcribe_audio(filename)
-
-    #     if not user_input.strip():
-    #         print("🤖 I didn’t hear anything.")
-    #         speak_response("I didn’t hear anything.")
-    #         continue
-
-    #     reply, end, intent = agent(user_input, mode="openai")
-
-    #     print("🤖:", reply)
-    #     speak_response(reply)
-
-    #     if intent not in [None, "none"] and not end:
-    #         print(f"✨ Detected intent: {intent}")
-
-    #         extra_data = None
-    #         if intent in ["get_balance", "get_token_price"]:
-    #             # speak_response("Please say or enter the token or wallet address.")
-    #             extra_data = input("🔐 Enter address: ").strip()
-    #         if intent == "get_solana_price":
-    #             # price = get_solana_price.run()
-    #             return f"Current SOL price is ${0:.2f}."
-
-    #         action_reply = handle_intent(intent, extra_data)
-    #         print("⚙️ Action response:", action_reply)
-    #         speak_response(action_reply)
-
-    #     # if intent not in [None, "none"] and not end:
-    #     #     print(f"✨ Detected intent: {intent}")
-
-    #     #     # If intent is get_balance, ask for address
-    #     #     if intent == "get_balance":
-    #     #         sol_address = prompt_for_address()
-    #     #         action_reply = handle_intent(intent, address=sol_address)
-    #     #     else:
-    #     #         action_reply = handle_intent(intent)
-
-    #     #     print("⚙️ Action response:", action_reply)
-    #     #     speak_response(action_reply)
-
-    #     try:
-    #         os.remove(filename)
-    #         if os.path.exists(RESPONSE_MP3):
-    #             os.remove(RESPONSE_MP3)
-    #     except Exception as cleanup_error:
-    #         print(f"⚠️ Cleanup error: {cleanup_error}")
-
-    #     if end:
-    #         print("👋 Ending conversation.")
-    #         break
-
-    #     time.sleep(0.5)
 
 if __name__ == "__main__":
     main()

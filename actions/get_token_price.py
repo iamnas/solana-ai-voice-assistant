@@ -1,6 +1,8 @@
 import requests
 
 def run(token_address: str):
+    if not token_address:
+        return "Token address is required."
     url = f"https://lite-api.jup.ag/price/v2?ids={token_address}"
     try:
         res = requests.get(url)

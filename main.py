@@ -42,7 +42,7 @@ def speak_response(text):
         print("🔊 Speaking (with SDK)...")
         deepgram = DeepgramClient(DEEPGRAM_API_KEY)
         TEXT = {"text": text}
-        options = SpeakOptions(model="aura-asteria-en")
+        options = SpeakOptions(model="aura-2-asteria-en")
         response = deepgram.speak.rest.v("1").save(RESPONSE_MP3, TEXT, options)
         print("🔊 Playing response...")
         playsound(RESPONSE_MP3)

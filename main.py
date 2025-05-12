@@ -67,7 +67,7 @@ def main():
             speak_response("I didn’t hear anything.")
             continue
 
-        reply, end, intent = agent(user_input, mode="openai")
+        reply, end, intent = agent(user_input, mode="genai")
 
         extra_data = None
         action_reply = None

@@ -56,3 +56,4 @@ class GoogleAgent:
             return "Sorry, I couldn't parse the response.", False
         except Exception as e:
             return f"Error: {e}", True
+
